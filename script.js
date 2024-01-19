@@ -5,16 +5,25 @@ let task;
 let removeTask;
 
 addTask.addEventListener("click", function(){
-    if (inputTask.value == ""){
-        alert("Input something first!");
-    } else {
+    addingTask();
+});
+
+inputTask.addEventListener("keypress", function(event){
+    if (event.key == "Enter") {
+        event.preventDefault();      
+        addingTask();    
+    }
+});
+
+function addingTask(){
+    if (inputTask.value !== ""){
         // Adding task
         task = document.createElement("li");
         task.appendChild(document.createTextNode(inputTask.value));
 
         removeTask = document.createElement("button");
         removeTask.textContent = "X"; 
-        
+
         taskList.appendChild(task).appendChild(removeTask);
 
         // Clearing text input
@@ -25,13 +34,16 @@ addTask.addEventListener("click", function(){
         
         // Mark as done
         task.addEventListener("click", function(text){
-            text.currentTarget.classList.toggle("done");
+            text.target.classList.toggle("done");
         });
 
         // Deletes task
         removeTask.addEventListener("click", function(deleteButton){
-            deleteButton.currentTarget.parentElement.remove();
-        });
+            deleteButton.target.parentElement.remove();
+        });    
+        
+    } else {
+        alert("Input something first!");
     }
-});
+}
 
